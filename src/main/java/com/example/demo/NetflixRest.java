@@ -19,7 +19,7 @@ public class NetflixRest implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        User user = feignRestClient.registerUser(new User(99L,"Jim"));
+        User user = feignRestClient.registerUser(new User(509L,"Annie"));
         System.err.println(user.toString());
 
         List<Category> category = feignRestClient.getAllCategories();
@@ -28,7 +28,7 @@ public class NetflixRest implements CommandLineRunner {
             System.err.println("Category: "+c.toString()+"\n");
         }
 
-        Movie movie = feignRestClient.suggestMovie(user.getIdentificationNumber(),new Movie(category,"Recent movie"));
+        Movie movie = feignRestClient.suggestMovie(user.getIdentificationNumber(),new Movie(category,"My movie"));
         System.out.println(movie.toString()+"\n");
 
         List<Movie> allTypeMovies = feignRestClient.getMoviesByCategoryIdAndType(1L,"Suggested");
@@ -36,18 +36,24 @@ public class NetflixRest implements CommandLineRunner {
 
         List<Movie> myMovies = feignRestClient.getMyMoviesByCategoryId(1l,user.getIdentificationNumber());
         System.err.println(myMovies.toString()+"\n");
-//
-//        Movie updatedMovie = feignRestClient.updateMovie(movie.getmId(),user.getIdentificationNumber(),new Movie(category,"Not the grinch"));
-//        System.out.println(updatedMovie.toString());
-//
-//        List<Movie> myUpdatedMovies = feignRestClient.getMoviesByCategoryIdAndType(1L,"Suggested");
-//        System.err.println(myUpdatedMovies.toString());
-//
-//        Void deletedMovie = feignRestClient.deleteMovie(movie.getmId(),user.getIdentificationNumber());
-//        System.out.println(deletedMovie.toString());
-//
-//        List<Movie> myMoviesNow = feignRestClient.getMoviesByCategoryIdAndType(1L,"Suggested");
-//        System.err.println(myMoviesNow.toString());
+
+        Movie updatedMovie = feignRestClient.updateMovie(movie.getId(),user.getIdentificationNumber(),new Movie(category,"Our movie"));
+        System.out.println(updatedMovie.toString()+"\n");
+
+        List<Movie> allTypeMoviesafter = feignRestClient.getMoviesByCategoryIdAndType(1L,"Suggested");
+        System.err.println(allTypeMoviesafter.toString()+"\n");
+
+        List<Movie> myMoviesafter = feignRestClient.getMyMoviesByCategoryId(1l,user.getIdentificationNumber());
+        System.err.println(myMoviesafter.toString()+"\n");
+
+        Void deletedMovie = feignRestClient.deleteMovie(movie.getId(),user.getIdentificationNumber());
+//        System.out.println(deletedMovie.toString()+"\n");
+
+        List<Movie> myMoviesNow = feignRestClient.getMoviesByCategoryIdAndType(1L,"Suggested");
+        System.err.println(myMoviesNow.toString()+"\n");
+
+        List<Movie> myMoviesafterd = feignRestClient.getMyMoviesByCategoryId(1l,user.getIdentificationNumber());
+        System.err.println(myMoviesafterd.toString()+"\n");
 
     }
 
